@@ -27,7 +27,7 @@ The practical consequence: what grates on you is calibrated to you. Your toleran
 ## Quickstart
 
 ```bash
-git clone https://github.com/scoetzeede/vestige-kit
+git clone https://github.com/uncovertechtalent/vestige-kit
 cp -r vestige-kit/skills/* ~/.claude/skills/
 cp vestige-kit/hooks/*.js ~/.claude/hooks/
 ```
