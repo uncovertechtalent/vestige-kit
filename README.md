@@ -48,6 +48,12 @@ and answer the questions. The skill writes your personalized `output-filter` ski
 
 Layer 3 is the one no skill fully fixes, and any repo claiming otherwise is selling something. The durable control is external: you, noticing, and saying so. The kit's job is to make layers 1 and 2 free so your attention is only spent on layer 3, and to give you a one-line vocabulary ("catalog hit", "add to catalog") for the moments layer 3 leaks.
 
+## Community and further reading
+
+- Discussion, case studies, and replication attempts: [r/ModelBehavior](https://www.reddit.com/r/ModelBehavior/) — behavioral science for AI systems; bring receipts.
+- The mechanism argument this kit implements: [Sycophancy Is Layered Symptom Substitution](https://coetzeestefan.substack.com/p/sycophancy-is-layered-symptom-substitution).
+- Independent measurement that wordlists fail (the AUC numbers): [measured-humanizer](https://github.com/SadhvikChirunomula/measured-humanizer).
+
 ## Requirements
 
 Node 14+ for the hook. No dependencies. MIT.
