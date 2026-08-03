@@ -1,0 +1,66 @@
+---
+name: calibrate
+description: >
+  Derive the user's personal vestige catalog and write their fitted output-filter
+  skill plus hook rule table. Interviews the user, mines their own session
+  transcripts for pushback moments, drafts catalog entries from real specimens,
+  and generates ~/.claude/skills/output-filter/SKILL.md and
+  ~/.claude/hooks/vestige-patterns.js. Activates on "/calibrate",
+  "calibrate my filter", "build my output filter".
+user-invocable: true
+---
+
+# Calibrate
+
+You are fitting an output filter to THIS user. Their tolerance for warmth, praise, hedging, and scaffolding is not yours to assume. Everything below produces evidence first, rules second.
+
+## Phase 1: mine the transcripts
+
+Session logs live under `~/.claude/projects/<project-dirs>/*.jsonl`. Search user messages for pushback markers:
+
+```bash
+grep -l . ~/.claude/projects/*/*.jsonl 2>/dev/null | head -50
+```
+
+Then scan for user turns containing (case-insensitive): "stop ", "don't ", "why are you", "just answer", "no fluff", "get to the point", "stop apologizing", "you don't need to", "skip the". For each hit, extract the assistant message immediately before it. That pair (assistant output + user reaction) is a specimen: the user's own past irritation, on the record.
+
+Cap the mining at 20 specimens. If the logs yield fewer than 5, say so and lean on Phase 2.
+
+## Phase 2: interview
+
+Ask these, one block, wait for answers:
+
+1. Which of these bother you? (praise openers / closers offering more help / hedge padding / agreement before disagreement / emotional mirroring / long preamble / moralizing on factual questions / buzzwords / none of these reliably)
+2. What do you want KEPT? (some people want warmth kept, or hedges kept when uncertainty is real. The filter must not strip what you value.)
+3. Paste 1 to 3 replies from any AI that grated on you, if you have them at hand.
+4. Vocabulary band: plain and short, or normal, or technical-dense?
+5. Pet bans: specific words or punctuation you never want in prose aimed at you?
+
+## Phase 3: draft the catalog
+
+From specimens + answers, draft entries. Each entry:
+
+- Pattern name, 2-3 example phrases (from THEIR specimens where possible, generic otherwise)
+- The fix, as an action
+- Documented exemptions
+- Evidence line: which specimens support it (or "interview only", flagged lower-confidence)
+
+Sort into layers per `CALIBRATION.md`: regex-safe with near-zero false positives goes to the hook BLOCK tier; regex-able but sometimes-legitimate goes to WARN; everything else stays prose. Present the draft catalog as a table and get explicit confirmation per entry. Entries they hesitate on go in as WARN or prose, never BLOCK.
+
+## Phase 4: generate the artifacts
+
+1. Write `~/.claude/skills/output-filter/SKILL.md` from the template in this repo (`skills/output-filter/SKILL.md`), replacing every `{{PLACEHOLDER}}` with their confirmed content. Let them pick the activation phrase and the default level.
+2. Write `~/.claude/hooks/vestige-patterns.js` with their BLOCK and WARN rules, keeping the file's exported interface intact (`BLOCK_RULES`, `WARN_RULES`, `stripExempt`, `scan`).
+3. Test each regex against their own specimens AND against 3 legitimate sentences that should NOT match. Show the test results.
+4. Show the hook wiring snippet for `~/.claude/settings.json` (from `settings-example.json`) and let THEM add it. Do not edit their settings file without asking.
+
+## Phase 5: schedule the refit
+
+Tell them the maintenance loop from `CALIBRATION.md` step 6 (add on grate, exempt on false positive, retire on model improvement), and suggest a re-run of `/calibrate` after 2 weeks of use, mining only transcripts newer than today.
+
+## Rules for you, the calibrating model
+
+- Do not import the repo author's taste. The starter entries in the template are worked examples, opt-in only.
+- Do not pad the catalog to look thorough. Five rules that fire correctly beat twenty that argue.
+- If their specimens contradict their interview answers (they SAY praise is fine, but three specimens show them snapping at praise), show them the contradiction and let them decide. Specimens outrank self-report as evidence, but the user outranks both.
+- The generated skill governs model-to-user output only. Never apply it to the user's own writing unless they ask.
