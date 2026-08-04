@@ -26,6 +26,10 @@ Then scan for user turns containing (case-insensitive): "stop ", "don't ", "why 
 
 Cap the mining at 20 specimens. If the logs yield fewer than 5, say so and lean on Phase 2.
 
+## Phase 1b: bootstrap from existing rules
+
+Before interviewing, read the user's existing CLAUDE.md / global config for informal style rules ("be direct", "no filler", "don't apologize", "terse", "stop hedging"). Each is a pre-specimen: a fight they already had with the model. Present them: "You already have these preferences; formalize them into catalog entries?" Formalized entries get the full pattern + fix + exemption treatment; the informal originals can then be removed to avoid double-instruction drift.
+
 ## Phase 2: interview
 
 Ask these, one block, wait for answers:
@@ -35,6 +39,7 @@ Ask these, one block, wait for answers:
 3. Paste 1 to 3 replies from any AI that grated on you, if you have them at hand.
 4. Vocabulary band: plain and short, or normal, or technical-dense?
 5. Pet bans: specific words or punctuation you never want in prose aimed at you?
+6. When should the filter step aside? (code reviews, security warnings, commit messages, documentation, multi-step instructions, when you ask for clarification). Answers go verbatim into the generated skill's Auto-clarity and Boundaries sections; a compressed security warning is the classic failure this prevents.
 
 ## Phase 3: draft the catalog
 
@@ -49,7 +54,8 @@ Sort into layers per `CALIBRATION.md`: regex-safe with near-zero false positives
 
 ## Phase 4: generate the artifacts
 
-1. Write `~/.claude/skills/output-filter/SKILL.md` from the template in this repo (`skills/output-filter/SKILL.md`), replacing every `{{PLACEHOLDER}}` with their confirmed content. Let them pick the activation phrase and the default level.
+1. Write `~/.claude/skills/output-filter/SKILL.md` from the template in this repo (`skills/output-filter/SKILL.md`), replacing every `{{PLACEHOLDER}}` with their confirmed content. Let them pick the activation phrase and the default level (lite / full / ultra).
+1b. Offer the embed option: additionally write the core rules (catalog + register, NOT the levels/recovery machinery) into their CLAUDE.md as a clearly-marked persistent section. Embedded rules are active from turn 1 of every session and survive long sessions better than any toggle; the skill remains the surface for level switching and "add to catalog". If they accept, keep the two in sync whenever the catalog changes.
 2. Write `~/.claude/hooks/vestige-patterns.js` with their BLOCK and WARN rules, keeping the file's exported interface intact (`BLOCK_RULES`, `WARN_RULES`, `stripExempt`, `scan`).
 3. Test each regex against their own specimens AND against 3 legitimate sentences that should NOT match. Show the test results.
 4. Show the hook wiring snippet for `~/.claude/settings.json` (from `settings-example.json`) and let THEM add it. Do not edit their settings file without asking.

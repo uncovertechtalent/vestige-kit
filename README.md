@@ -21,8 +21,9 @@ The practical consequence: what grates on you is calibrated to you. Your toleran
 | `skills/calibrate/` | Interactive skill. Claude interviews you, mines your own session transcripts for moments where you pushed back, and drafts your personal catalog from those specimens. |
 | `skills/output-filter/` | The filter skill template. Your catalog lives here once calibrated. Selectable levels, escape hatches, boundaries. |
 | `skills/style-review/` | Post-hoc audit of any existing text against your catalog. Read-only, produces a hit list. |
-| `hooks/` | A Stop hook that mechanically rescans every reply against the regex-safe slice of your catalog and blocks with a fix list. |
-| `CALIBRATION.md` | The derivation procedure in full, with design rationale. |
+| `hooks/` | A Stop hook that mechanically rescans every reply against the regex-safe slice of your catalog and blocks with a fix list. Plus `analyze-log.js` to turn the hit log into retire/promote decisions. |
+| `CALIBRATION.md` | The derivation procedure in full, with design rationale, the add-to-catalog maintenance loop, and a token-savings measurement. |
+| `EXAMPLES.md` | Three example calibrations (engineering lead / technical writer / solo dev) showing the spectrum. Examples, not defaults. |
 
 ## Quickstart
 

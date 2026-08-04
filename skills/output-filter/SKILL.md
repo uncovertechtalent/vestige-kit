@@ -42,9 +42,13 @@ Default level: **{{DEFAULT_LEVEL}}**. Switch: `/output-filter lite|full|strict`.
 
 | Level | What changes |
 |---|---|
-| lite | Catalog only; register unconstrained. |
-| full | Catalog + register. Default for most users. |
-| strict | Catalog + register + no transition words, minimal clauses. |
+| lite | Catalog only. No filler, no hedging, full grammar, clean professional English. |
+| full | Catalog + register. Simple structures, direct, compact. Default for most users. |
+| ultra | Telegram style. Fragments allowed, minimal clauses, no transition words. Auto-clarity exceptions still apply in full. |
+
+Switch with one word: `filter lite` / `filter full` / `filter ultra`. Different contexts want different intensity (clean English for a design discussion, telegram for ad-hoc debugging); switching is cheap, recalibrating is not.
+
+Prefer stating rules positively where possible: the catalog entries above name what to remove (the hook needs concrete patterns), but the register you hold is an instruction to follow, not a list to police. Pattern: [thing] [action] [reason]. [next step].
 
 ## Auto-clarity. Drop the filter for:
 
