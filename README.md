@@ -22,7 +22,8 @@ The practical consequence: what grates on you is calibrated to you. Your toleran
 | `skills/output-filter/` | The filter skill template. Your catalog lives here once calibrated. Selectable levels, escape hatches, boundaries. |
 | `skills/style-review/` | Post-hoc audit of any existing text against your catalog. Read-only, produces a hit list. |
 | `skills/label-gate/` | Epistemic gate for diagnostic labels ("conspiracy theory", "debunked", "fringe"). The label becomes a trigger instead of a verdict: it stands only after the claim is scored on four form questions, printed with the answer. Same boundary-enforcement doctrine, different trained reflex. |
-| `hooks/` | A Stop hook that mechanically rescans every reply against the regex-safe slice of your catalog and blocks with a fix list. Plus `analyze-log.js` to turn the hit log into retire/promote decisions. |
+| `skills/guess-gate/` | Reference-verification gate for confabulated references (paths, commands, usernames, quotes). Every factual reference either carries its source or carries its label; `hooks/guess-scan.js` enforces the locally checkable classes deterministically. Three trained reflexes, one boundary doctrine: strip the fawn words, score the labels, verify the references. |
+| `hooks/` | Stop hooks that mechanically rescan every reply: `vestige-scan.js` against the regex-safe slice of your catalog, `guess-scan.js` against checkable reference classes (path existence, PATH commands, username rosters). Plus `analyze-log.js` to turn the hit logs into retire/promote decisions. |
 | `CALIBRATION.md` | The derivation procedure in full, with design rationale, the add-to-catalog maintenance loop, and a token-savings measurement. |
 | `EXAMPLES.md` | Three example calibrations (engineering lead / technical writer / solo dev) showing the spectrum. Examples, not defaults. |
 
