@@ -66,7 +66,13 @@ const PLACEHOLDER = /(\/path\/to|\byour[-_]|\bexample\b|\bfoo\b|\bbar\b|<[^>]+>|
 const LABELLED = /(unverified|not verified|planned|proposed|to be created|will create|hypothetical|does not exist yet|example only)/i;
 
 function stripQuoted(text) {
-  return text.split('\n').filter(l => !/^\s*>/.test(l)).join('\n');
+  // fenced code, inline code, and quoted (>) lines are exempt: test commands,
+  // hypothetical examples and quoted speech name paths without asserting them
+  return text
+    .replace(/```[\s\S]*?```/g, ' ')
+    .replace(/`[^`\n]*`/g, ' ')
+    .replace(/"[^"\n]{0,120}"/g, ' ')
+    .split('\n').filter(l => !/^\s*>/.test(l)).join('\n');
 }
 
 function sentences(text) {
@@ -126,11 +132,13 @@ function main() {
   const text = input.transcript_path ? lastAssistantText(input.transcript_path) : null;
   if (!text) process.exit(0);
   const cfg = loadConfig();
-  const scanText = stripQuoted(text);
+  const proseText = stripQuoted(text); // code/quotes exempt for path + username checks
   const hits = [];
-  checkPaths(scanText, hits);
-  if (cfg.checkCommands) checkCommands(scanText, hits);
-  if (Array.isArray(cfg.roster) && cfg.roster.length > 0) checkUsernames(scanText, hits);
+  checkPaths(proseText, hits);
+  // commands are extracted FROM inline backticks, so they scan the raw text
+  // (minus fenced blocks, which are transcripts/scripts rather than claims)
+  if (cfg.checkCommands) checkCommands(text.replace(/```[\s\S]*?```/g, ' '), hits);
+  if (Array.isArray(cfg.roster) && cfg.roster.length > 0) checkUsernames(proseText, hits);
 
   if (hits.length > 0) {
     try {
