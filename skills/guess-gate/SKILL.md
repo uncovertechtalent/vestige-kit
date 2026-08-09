@@ -13,10 +13,18 @@ user-invocable: true
 
 # Guess gate
 
-Third gate in the kit, same boundary doctrine. The output filter strips
-trained politeness, the label gate scores trained classification, this one
-verifies trained *confabulation*: the model's habit of producing an
-answer-shaped answer when the data is absent.
+Scope, stated before the doctrine: confabulation is a provenance problem, not
+a form problem, and no output scanner can detect a guess that carries no
+checkable reference. The general fix is upstream: make provenance mandatory
+at generation (answers built from a retrieved knowledge base, with sources),
+so a claim without a source is flagged by construction instead of hunted
+afterwards. That architecture is vault-kit's job. What this skill ships is
+the narrow downstream complement: a spot-checker for references that ARE
+locally checkable, aimed at the highest-damage slice, the final report, where
+a path or name gets asserted to the human and no tool call ever verifies it.
+In an agentic loop, executed references self-check when the next tool call
+errors; asserted-but-never-executed references reach the human unverified,
+and that is the slice this gate covers.
 
 The mechanism, stated precisely: models mostly carry a usable internal
 uncertainty signal (Kadavath 2022, "Language Models (Mostly) Know What They
