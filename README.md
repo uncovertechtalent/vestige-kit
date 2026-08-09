@@ -21,6 +21,7 @@ The practical consequence: what grates on you is calibrated to you. Your toleran
 | `skills/calibrate/` | Interactive skill. Claude interviews you, mines your own session transcripts for moments where you pushed back, and drafts your personal catalog from those specimens. |
 | `skills/output-filter/` | The filter skill template. Your catalog lives here once calibrated. Selectable levels, escape hatches, boundaries. |
 | `skills/style-review/` | Post-hoc audit of any existing text against your catalog. Read-only, produces a hit list. |
+| `skills/label-gate/` | Epistemic gate for diagnostic labels ("conspiracy theory", "debunked", "fringe"). The label becomes a trigger instead of a verdict: it stands only after the claim is scored on four form questions, printed with the answer. Same boundary-enforcement doctrine, different trained reflex. |
 | `hooks/` | A Stop hook that mechanically rescans every reply against the regex-safe slice of your catalog and blocks with a fix list. Plus `analyze-log.js` to turn the hit log into retire/promote decisions. |
 | `CALIBRATION.md` | The derivation procedure in full, with design rationale, the add-to-catalog maintenance loop, and a token-savings measurement. |
 | `EXAMPLES.md` | Three example calibrations (engineering lead / technical writer / solo dev) showing the spectrum. Examples, not defaults. |
@@ -54,6 +55,8 @@ Layer 3 is the one no skill fully fixes, and any repo claiming otherwise is sell
 - Discussion, case studies, and replication attempts: [r/ModelBehavior](https://www.reddit.com/r/ModelBehavior/) — behavioral science for AI systems; bring receipts.
 - The mechanism argument this kit implements: [Sycophancy Is Layered Symptom Substitution](https://coetzeestefan.substack.com/p/sycophancy-is-layered-symptom-substitution).
 - Independent measurement that wordlists fail (the AUC numbers): [measured-humanizer](https://github.com/SadhvikChirunomula/measured-humanizer).
+- Why the label gate exists, with the historical receipts: [the archive is a witness with interests](https://redd.it/1vjxclr) and [the harness cut](https://redd.it/1vjxn2r).
+- The program's claims ledger and experiments: [machinebehavior.io](https://machinebehavior.io).
 
 ## Requirements
 
