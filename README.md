@@ -56,6 +56,8 @@ Layer 3 is the one no skill fully fixes, and any repo claiming otherwise is sell
 - Discussion, case studies, and replication attempts: [r/ModelBehavior](https://www.reddit.com/r/ModelBehavior/) — behavioral science for AI systems; bring receipts.
 - The mechanism argument this kit implements: [Sycophancy Is Layered Symptom Substitution](https://coetzeestefan.substack.com/p/sycophancy-is-layered-symptom-substitution).
 - Independent measurement that wordlists fail (the AUC numbers): [measured-humanizer](https://github.com/SadhvikChirunomula/measured-humanizer).
+- A sibling tool from the other direction: [claudish-to-english](https://github.com/gvzdv/claudish-to-english) rewrites each message through a local model for display. It fixes the viewer; this kit fixes the output at the boundary. Different layer, same diagnosis that the register is a mechanical problem.
+- The register named by a crowd, with the mechanism diagnosed in the comments: the [Claudish thread](https://old.reddit.com/r/ClaudeAI/comments/1vl0n1t/) (1500+ upvotes). Corroboration that this is a real, widely-felt pattern, not one author's pet peeve.
 - Why the label gate exists, with the historical receipts: [the archive is a witness with interests](https://redd.it/1vjxclr) and [the harness cut](https://redd.it/1vjxn2r).
 - The program's claims ledger and experiments: [machinebehavior.io](https://machinebehavior.io).
 
