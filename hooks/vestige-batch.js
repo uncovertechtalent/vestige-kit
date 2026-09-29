@@ -17,6 +17,7 @@
 //   --warn      include WARN-tier hits in the report (default: block only)
 //   --quiet     print only files with hits (default: also prints a clean line)
 //   --json      machine-readable output for programmatic loops
+//   --script    skip the mode-leak family (drafts written to be spoken)
 //
 // Exit: 1 if any block-tier hit across all inputs, else 0.
 
@@ -30,9 +31,10 @@ const inputs = args.filter(a => !a.startsWith('--'));
 const showWarn = flags.has('--warn');
 const quiet = flags.has('--quiet');
 const asJson = flags.has('--json');
+const scanOpts = flags.has('--script') ? { skipFamilies: ['mode-leak'] } : {};
 
 if (inputs.length === 0) {
-  process.stderr.write('usage: vestige-batch.js [--warn] [--quiet] [--json] <file-or-dir>...\n');
+  process.stderr.write('usage: vestige-batch.js [--warn] [--quiet] [--json] [--script] <file-or-dir>...\n');
   process.exit(2);
 }
 
@@ -58,7 +60,7 @@ let totalBlock = 0;
 for (const f of files) {
   let text;
   try { text = fs.readFileSync(f, 'utf8'); } catch { continue; }
-  const hits = scan(stripExempt(text));
+  const hits = scan(stripExempt(text), scanOpts);
   const block = hits.block.length;
   const warn = hits.warn.length;
   totalBlock += block;

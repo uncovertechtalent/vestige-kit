@@ -41,7 +41,8 @@ function main() {
 
   let text;
   try { text = fs.readFileSync(fp, 'utf8'); } catch { process.exit(0); }
-  const hits = scan(stripExempt(text));
+  // Scripts are written to be spoken: stage devices are correct there.
+  const hits = scan(stripExempt(text), /script/i.test(fp) ? { skipFamilies: ['mode-leak'] } : {});
   if (hits.block.length === 0) process.exit(0);
 
   try {

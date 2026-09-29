@@ -13,6 +13,14 @@ const BLOCK_RULES = [
   { name: 'service-closer', re: /\b(let me know if|feel free to|happy to help|hope (this|that) helps|don't hesitate to)\b/gi, fix: 'delete; stop after the substance' },
   { name: 'filler-idiom', re: /\b(at the end of the day|the bottom line is|needless to say)\b/gi, fix: 'delete filler' },
 
+  // Mode-leak family: stage devices from live speech in text that is read
+  // silently. The pattern is anchored to the start of a sentence or line, so a
+  // quoted mention ("Here's the thing" inside a sentence) does not fire. Scripts
+  // written to be spoken use these on purpose: callers skip the family there
+  // (vestige-write-scan.js on paths containing "script", vestige-batch.js --script).
+  // False-positive test: 0 hits across 1,282 markdown files of the author's vault.
+  { name: 'hook-opener', family: 'mode-leak', re: new RegExp(String.raw`(?:^|[.!?]\s+)[ \t]*(?:[-*+]\s+|\d+\.\s+|#+\s+)?(?:\*\*|_)?(?:here'?s the (?:thing|kicker|catch|twist)|let'?s (?:dive|jump) in|let'?s break (?:it|this) down|picture this|imagine this:|buckle up|spoiler(?: alert)?:|but wait)`, 'gim'), fix: 'stage hook in written text: delete it and open on the substance' },
+
   // Personal-taste examples, disabled by default. Enable if they match YOUR
   // calibration (see CALIBRATION.md step 3 for the false-positive test):
   // { name: 'em-dash', re: /—/g, fix: 'no em dashes in prose; use a period or comma' },
@@ -35,13 +43,17 @@ function stripExempt(text) {
     .split('\n').filter(l => !/^\s*>/.test(l)).join('\n'); // quoted lines
 }
 
-function scan(text) {
+// opts.skipFamilies: rule families to skip, e.g. ['mode-leak'] for scripts.
+function scan(text, opts = {}) {
+  const skip = new Set(opts.skipFamilies || []);
   const hits = { block: [], warn: [] };
   for (const r of BLOCK_RULES) {
+    if (r.family && skip.has(r.family)) continue;
     const m = text.match(r.re);
     if (m) hits.block.push(`${r.name} x${m.length} ("${String(m[0]).slice(0, 40)}") -> ${r.fix}`);
   }
   for (const r of WARN_RULES) {
+    if (r.family && skip.has(r.family)) continue;
     const m = text.match(r.re);
     if (m) hits.warn.push(`${r.name} x${m.length} ("${String(m[0]).slice(0, 40)}") -> ${r.fix}`);
   }

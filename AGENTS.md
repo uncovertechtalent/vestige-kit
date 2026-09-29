@@ -53,6 +53,8 @@ Each entry is a failure seen in use, with its cause.
 8. **Zero hits for weeks is a signal too.** Either the base model changed or the rule is too narrow. `analyze-log.js` lists retirement and promotion candidates.
 9. **Wordlists of "AI tell" words do not discriminate.** Measured elsewhere at coin-flip rates, and hedging words run backwards because humans hedge more. Do not add rules on that basis. See the README for the source.
 
+10. **Stage hooks are a position rule, not a word list.** `hook-opener` fires only at the start of a sentence or line, so a quoted mention inside a sentence passes. That anchor is what separates it from the word lists in trap 9: the same phrase is legitimate in a script written to be spoken, where it is the right device. The write scan skips the `mode-leak` family for paths containing `script`, and `vestige-batch.js --script` does the same on the CLI. If a user writes talks or video scripts outside such paths, tell them about the flag before they ask why the hook blocks their script.
+
 ## Verifying a change
 
 ```bash

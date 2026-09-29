@@ -34,7 +34,7 @@ Before interviewing, read the user's existing CLAUDE.md / global config for info
 
 Ask these, one block, wait for answers:
 
-1. Which of these bother you? (praise openers / closers offering more help / hedge padding / agreement before disagreement / emotional mirroring / long preamble / moralizing on factual questions / buzzwords / none of these reliably)
+1. Which of these bother you? (praise openers / closers offering more help / hedge padding / agreement before disagreement / emotional mirroring / long preamble / moralizing on factual questions / buzzwords / stage hooks such as "here's the thing" or "let's dive in" / none of these reliably)
 2. What do you want KEPT? (some people want warmth kept, or hedges kept when uncertainty is real. The filter must not strip what you value.)
 3. Paste 1 to 3 replies from any AI that grated on you, if you have them at hand.
 4. Vocabulary band: plain and short, or normal, or technical-dense?
@@ -56,7 +56,7 @@ Sort into layers per `CALIBRATION.md`: regex-safe with near-zero false positives
 
 1. Write `~/.claude/skills/output-filter/SKILL.md` from the template in this repo (`skills/output-filter/SKILL.md`), replacing every `{{PLACEHOLDER}}` with their confirmed content. Let them pick the activation phrase and the default level (lite / full / ultra).
 1b. Offer the embed option: additionally write the core rules (catalog + register, NOT the levels/recovery machinery) into their CLAUDE.md as a clearly-marked persistent section. Embedded rules are active from turn 1 of every session and survive long sessions better than any toggle; the skill remains the surface for level switching and "add to catalog". If they accept, keep the two in sync whenever the catalog changes.
-2. Write `~/.claude/hooks/vestige-patterns.js` with their BLOCK and WARN rules, keeping the file's exported interface intact (`BLOCK_RULES`, `WARN_RULES`, `stripExempt`, `scan`).
+2. Write `~/.claude/hooks/vestige-patterns.js` with their BLOCK and WARN rules, keeping the file's exported interface intact (`BLOCK_RULES`, `WARN_RULES`, `stripExempt`, `scan`). Keep the `family` field on rules that carry one and the `opts.skipFamilies` parameter of `scan`: the write scan and `vestige-batch.js --script` use them to exempt scripts from the `mode-leak` family.
 3. Test each regex against their own specimens AND against 3 legitimate sentences that should NOT match. Show the test results.
 4. Show the hook wiring snippet for `~/.claude/settings.json` (from `settings-example.json`) and let THEM add it. Do not edit their settings file without asking.
 
