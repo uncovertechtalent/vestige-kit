@@ -86,4 +86,4 @@ if (asJson) {
   process.stdout.write(`\nscanned ${files.length} file(s), ${totalBlock} block-tier hit(s)\n`);
 }
 
-process.exit(totalBlock > 0 ? 1 : 0);
+process.exitCode = totalBlock > 0 ? 1 : 0; // exitCode, not exit(): exit() truncates large piped stdout
